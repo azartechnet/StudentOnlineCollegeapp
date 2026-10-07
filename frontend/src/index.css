@@ -1,0 +1,1876 @@
+/* ================================================================
+   GLOBAL RESET
+   ================================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+body {
+  color: #333;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #f0f2f5, #e8eaf6, #f0f2f5, #e3f2fd);
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+  overflow-x: hidden;
+}
+
+/* ================================================================
+   KEYFRAMES LIBRARY
+   ================================================================ */
+
+/* --- Entrance --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.3); }
+  50% { opacity: 1; transform: scale(1.08); }
+  70% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+@keyframes flipInX {
+  from {
+    opacity: 0;
+    transform: perspective(400px) rotateX(90deg);
+  }
+  40% {
+    transform: perspective(400px) rotateX(-20deg);
+  }
+  60% {
+    transform: perspective(400px) rotateX(10deg);
+  }
+  80% {
+    transform: perspective(400px) rotateX(-5deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(400px) rotateX(0);
+  }
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* --- Continuous --- */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(26, 35, 126, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(26, 35, 126, 0.7); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-10px); }
+  40%, 80% { transform: translateX(10px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+@keyframes slideBackground {
+  0% { background-position: 0 0; }
+  100% { background-position: 100px 100px; }
+}
+
+@keyframes glowText {
+  0%, 100% { text-shadow: 0 0 5px rgba(26, 35, 126, 0.3); }
+  50% { text-shadow: 0 0 20px rgba(26, 35, 126, 0.8); }
+}
+
+/* --- Slide-In for Timer --- */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(100px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ================================================================
+   CONTAINER + CARD (Page Transitions)
+   ================================================================ */
+.container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* ================================================================
+   HEADINGS (Glow animation)
+   ================================================================ */
+h1 {
+  margin-bottom: 20px;
+  color: #1a237e;
+  font-size: 32px;
+  animation: fadeInDown 0.6s ease-out;
+  position: relative;
+}
+
+h1::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #1a237e, #5c6bc0);
+  border-radius: 2px;
+  margin-top: 8px;
+  animation: slideInRight 0.8s ease-out 0.3s both;
+}
+
+h2 {
+  margin-bottom: 18px;
+  color: #1a237e;
+  font-size: 24px;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+h3 {
+  margin-bottom: 14px;
+  color: #1a237e;
+  font-size: 18px;
+  animation: fadeInLeft 0.4s ease-out;
+}
+
+/* ================================================================
+   INPUTS
+   ================================================================ */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 8px 0;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.25s ease;
+  background: #fafafa;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #9fa8da;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #1a237e;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(26, 35, 126, 0.12);
+  transform: translateY(-1px);
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* ================================================================
+   BUTTONS (Lift + Ripple + Shadow)
+   ================================================================ */
+button {
+  background: #1a237e;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 5px 5px 5px 0;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  box-shadow: 0 2px 8px rgba(26, 35, 126, 0.2);
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(26, 35, 126, 0.35);
+  background: #283593;
+}
+
+button:hover:not(:disabled)::before {
+  width: 300px;
+  height: 300px;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(26, 35, 126, 0.25);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.danger {
+  background: #c62828;
+  box-shadow: 0 2px 8px rgba(198, 40, 40, 0.25);
+}
+button.danger:hover:not(:disabled) {
+  background: #b71c1c;
+  box-shadow: 0 8px 20px rgba(198, 40, 40, 0.35);
+}
+
+button.success {
+  background: #1a237e;
+  box-shadow: 0 2px 8px rgba(26, 35, 126, 0.25);
+}
+button.success:hover:not(:disabled) {
+  background: #283593;
+  box-shadow: 0 8px 20px rgba(26, 35, 126, 0.35);
+}
+
+button.warning {
+  background: #ef6c00;
+  box-shadow: 0 2px 8px rgba(239, 108, 0, 0.25);
+}
+button.warning:hover:not(:disabled) {
+  background: #e65100;
+  box-shadow: 0 8px 20px rgba(239, 108, 0, 0.35);
+}
+
+/* ================================================================
+   NAVBAR (Sticky + Gradient + FadeDown)
+   ================================================================ */
+.navbar {
+  background: linear-gradient(135deg, #9fa5ef 0%, #283593 100%);
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(26, 35, 126, 0.25);
+  animation: fadeInDown 0.5s ease-out;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 15px;
+  position: relative;
+  transition: color 0.25s ease;
+  padding-bottom: 3px;
+}
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fff, #bbdefb);
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #bbdefb;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.navbar strong {
+  font-size: 18px;
+}
+
+/* Round logo */
+.navbar-logo {
+  height: 52px;
+  width: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  background: #ffffff;
+  padding: 2px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3),
+              0 0 0 2px rgba(255, 255, 255, 0.6);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease;
+  flex-shrink: 0;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.12) rotate(-6deg);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4),
+              0 0 0 3px rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-logo {
+    height: 42px;
+    width: 42px;
+  }
+}
+
+.navbar-logo:hover {
+  transform: scale(1.12) rotate(-3deg);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.navbar-brand-text {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+/* ================================================================
+   GRID + QUESTION CARDS
+   ================================================================ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.question-card {
+  background: #f9f9f9;
+  padding: 18px;
+  border-radius: 10px;
+  border-left: 4px solid #1a237e;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeInUp 0.5s ease-out both;
+  cursor: default;
+}
+
+.question-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 10px 30px rgba(26, 35, 126, 0.15);
+  border-left-color: #3949ab;
+  background: #fff;
+}
+
+/* Staggered animation */
+.question-card:nth-child(1) { animation-delay: 0.05s; }
+.question-card:nth-child(2) { animation-delay: 0.1s; }
+.question-card:nth-child(3) { animation-delay: 0.15s; }
+.question-card:nth-child(4) { animation-delay: 0.2s; }
+.question-card:nth-child(5) { animation-delay: 0.25s; }
+.question-card:nth-child(6) { animation-delay: 0.3s; }
+.question-card:nth-child(7) { animation-delay: 0.35s; }
+.question-card:nth-child(8) { animation-delay: 0.4s; }
+.question-card:nth-child(9) { animation-delay: 0.45s; }
+.question-card:nth-child(10) { animation-delay: 0.5s; }
+
+/* ================================================================
+   OPTIONS (Radio buttons)
+   ================================================================ */
+.option {
+  display: block;
+  margin: 8px 0;
+  padding: 12px 15px;
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.option:hover {
+  background: #e8eaf6;
+  border-color: #5c6bc0;
+  transform: translateX(5px);
+}
+
+.option.selected {
+  background: #c5cae9;
+  border-color: #1a237e;
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(26, 35, 126, 0.2);
+}
+
+.option.selected::after {
+  content: '✓';
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #1a237e;
+  font-weight: bold;
+  font-size: 18px;
+  animation: bounceIn 0.3s ease-out;
+}
+
+/* ================================================================
+   BADGES
+   ================================================================ */
+.badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  animation: scaleIn 0.4s ease-out;
+}
+
+.badge.pending {
+  background: #fff3e0;
+  color: #ef6c00;
+  animation: pulse 2s infinite;
+}
+
+.badge.reviewed {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.badge.published {
+  background: #e8f5e9;
+  color: #2e7d32;
+  animation: bounceIn 0.5s ease-out;
+}
+
+.badge.active {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.badge.inactive {
+  background: #ffebee;
+  color: #c62828;
+}
+
+/* ================================================================
+   MESSAGES
+   ================================================================ */
+.error {
+  color: #c62828;
+  margin: 10px 0;
+  padding: 12px 15px;
+  background: #ffebee;
+  border-left: 4px solid #c62828;
+  border-radius: 6px;
+  animation: shake 0.4s ease-out;
+}
+
+.success {
+  color: #2e7d32;
+  margin: 10px 0;
+  padding: 12px 15px;
+  background: #e8f5e9;
+  border-left: 4px solid #2e7d32;
+  border-radius: 6px;
+  animation: bounceIn 0.5s ease-out;
+}
+
+.link {
+  color: #1a237e;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #3949ab;
+}
+
+/* ================================================================
+   TABLE (Cascading rows)
+   ================================================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background: linear-gradient(135deg, #1a237e, #283593);
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+tbody tr {
+  animation: fadeInLeft 0.4s ease-out both;
+  transition: background 0.2s ease;
+}
+
+tbody tr:hover {
+  background: #f5f5f5;
+}
+
+tbody tr:nth-child(1) { animation-delay: 0.05s; }
+tbody tr:nth-child(2) { animation-delay: 0.1s; }
+tbody tr:nth-child(3) { animation-delay: 0.15s; }
+tbody tr:nth-child(4) { animation-delay: 0.2s; }
+tbody tr:nth-child(5) { animation-delay: 0.25s; }
+tbody tr:nth-child(6) { animation-delay: 0.3s; }
+tbody tr:nth-child(7) { animation-delay: 0.35s; }
+tbody tr:nth-child(8) { animation-delay: 0.4s; }
+
+/* ================================================================
+   TIMER (Fixed + Glowing + Sliding in)
+   ================================================================ */
+.timer {
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  background: linear-gradient(135deg, #dee0f3, #dee0f3);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 12px;
+  font-size: 22px;
+  font-weight: bold;
+  box-shadow: 0 4px 20px rgba(198, 202, 245, 0.4);
+  z-index: 999;
+  animation: slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1), pulseGlow 2s infinite 0.6s;
+  letter-spacing: 1px;
+}
+
+.timer.warning {
+  background: linear-gradient(135deg, #ef6c00, #f57c00);
+  box-shadow: 0 4px 20px rgba(239, 108, 0, 0.5);
+  animation: slideInRight 0.6s ease-out, wiggle 1s infinite;
+}
+
+.timer.danger {
+  background: linear-gradient(135deg, #c62828, #d32f2f);
+  box-shadow: 0 4px 20px rgba(198, 40, 40, 0.6);
+  animation: slideInRight 0.6s ease-out, pulse 0.8s infinite;
+}
+
+/* ================================================================
+   TAB BAR
+   ================================================================ */
+.tab-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  animation: fadeInDown 0.5s ease-out;
+}
+
+.tab-bar button {
+  margin: 0;
+  position: relative;
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+.tab-bar button:nth-child(1) { animation-delay: 0.05s; }
+.tab-bar button:nth-child(2) { animation-delay: 0.1s; }
+.tab-bar button:nth-child(3) { animation-delay: 0.15s; }
+.tab-bar button:nth-child(4) { animation-delay: 0.2s; }
+
+/* ================================================================
+   SPINNER (Loading)
+   ================================================================ */
+.spinner {
+  width: 45px;
+  height: 45px;
+  border: 4px solid #e8eaf6;
+  border-top-color: #1a237e;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 30px auto;
+}
+
+/* ================================================================
+   SCORE DISPLAY (Result page)
+   ================================================================ */
+.score-display {
+  font-size: 60px;
+  font-weight: bold;
+  color: #2e7d32;
+  animation: bounceIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin: 25px 0;
+  text-align: center;
+  text-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
+}
+
+/* ================================================================
+   LOGO ON AUTH PAGES
+   ================================================================ */
+.auth-logo {
+  max-width: 160px;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+  animation: bounceIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+             float 3s ease-in-out infinite 0.8s;
+  filter: drop-shadow(0 4px 12px rgba(26, 35, 126, 0.25));
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 15px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-logo {
+    height: 42px;
+  }
+
+  .navbar-brand-text {
+    font-size: 17px;
+  }
+
+  h1 { font-size: 24px; }
+  h2 { font-size: 20px; }
+
+  .container {
+    padding: 15px;
+    margin: 15px auto;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .timer {
+    top: auto;
+    bottom: 20px;
+    right: 15px;
+    font-size: 18px;
+    padding: 12px 20px;
+  }
+
+  .score-display {
+    font-size: 44px;
+  }
+
+  button {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .tab-bar button {
+    width: auto;
+    margin: 0;
+  }
+}
+
+/* ================================================================
+   REDUCED MOTION (Accessibility)
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* ============================================================
+   MODAL (Edit Student)
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+  animation: fadeIn 0.25s ease-out;
+  overflow-y: auto;
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 30px;
+  max-width: 550px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.modal-box h2 {
+  margin-bottom: 10px;
+  color: #1a237e;
+  animation: fadeInDown 0.4s ease-out;
+}
+
+.modal-box label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+
+.modal-box input {
+  margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .modal-box {
+    padding: 20px;
+    border-radius: 10px;
+  }
+}
+
+/* Row action buttons in students table */
+table td button {
+  padding: 6px 12px;
+  font-size: 13px;
+  margin: 2px;
+}
+/* ============================================================
+   SUBMISSION SUCCESS PAGE — CELEBRATION ANIMATIONS
+   ============================================================ */
+
+/* --- Container entrance --- */
+.submit-success {
+  position: relative;
+  text-align: center;
+  padding: 40px 30px;
+  overflow: hidden;
+}
+
+/* --- Big animated checkmark --- */
+.success-checkmark {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  position: relative;
+  animation: checkPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.success-checkmark svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.success-checkmark .circle {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  animation: drawCircle 0.8s ease-out 0.2s forwards;
+}
+
+.success-checkmark .check {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: drawCheck 0.5s ease-out 0.9s forwards;
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes drawCircle {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+/* --- Celebration emojis --- */
+.celebration-emoji {
+  font-size: 60px;
+  display: inline-block;
+  animation: wave 1.5s ease-in-out infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(20deg); }
+  75% { transform: rotate(-20deg); }
+}
+
+/* --- Success heading animation --- */
+.success-heading {
+  font-size: 40px;
+  color: #1a237e;
+  font-weight: bold;
+  margin-bottom: 15px;
+  animation: fadeInDown 0.6s ease-out 0.3s both;
+  text-shadow: 0 2px 10px rgba(26, 35, 126, 0.15);
+}
+
+/* --- Success message banner --- */
+.success-message {
+  display: inline-block;
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  color: #2e7d32;
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  margin: 15px 0;
+  animation: fadeInUp 0.6s ease-out 0.5s both,
+             bounceIn 0.6s ease-out 0.5s both;
+  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.15);
+}
+
+/* --- Secondary text --- */
+.pending-text {
+  color: #666;
+  font-size: 16px;
+  margin: 15px 0 25px;
+  animation: fadeIn 0.6s ease-out 0.7s both;
+}
+
+.pending-text::before {
+  content: '⏳ ';
+  animation: spin 2s linear infinite;
+  display: inline-block;
+}
+
+/* --- Button container --- */
+.submit-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  animation: fadeInUp 0.6s ease-out 0.9s both;
+}
+
+.submit-actions button {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.submit-actions button:nth-child(1) { animation-delay: 0.9s; }
+.submit-actions button:nth-child(2) { animation-delay: 1s; }
+
+/* --- Confetti particles --- */
+.confetti-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  animation: confettiFall 3s ease-in forwards;
+}
+
+.confetti:nth-child(1) { left: 5%;  background: #f44336; animation-delay: 0s;    animation-duration: 2.8s; }
+.confetti:nth-child(2) { left: 12%; background: #e91e63; animation-delay: 0.15s; animation-duration: 3.2s; }
+.confetti:nth-child(3) { left: 20%; background: #9c27b0; animation-delay: 0.3s;  animation-duration: 2.6s; }
+.confetti:nth-child(4) { left: 28%; background: #3f51b5; animation-delay: 0.05s; animation-duration: 3s; }
+.confetti:nth-child(5) { left: 35%; background: #2196f3; animation-delay: 0.4s;  animation-duration: 2.9s; }
+.confetti:nth-child(6) { left: 42%; background: #03a9f4; animation-delay: 0.2s;  animation-duration: 3.1s; }
+.confetti:nth-child(7) { left: 50%; background: #00bcd4; animation-delay: 0.35s; animation-duration: 2.7s; }
+.confetti:nth-child(8) { left: 58%; background: #4caf50; animation-delay: 0.1s;  animation-duration: 3.3s; }
+.confetti:nth-child(9) { left: 65%; background: #8bc34a; animation-delay: 0.45s; animation-duration: 2.8s; }
+.confetti:nth-child(10){ left: 72%; background: #cddc39; animation-delay: 0.25s; animation-duration: 3s; }
+.confetti:nth-child(11){ left: 80%; background: #ffeb3b; animation-delay: 0.55s; animation-duration: 2.6s; }
+.confetti:nth-child(12){ left: 88%; background: #ffc107; animation-delay: 0.1s;  animation-duration: 3.2s; }
+.confetti:nth-child(13){ left: 15%; background: #ff5722; animation-delay: 0.6s;  animation-duration: 2.9s; }
+.confetti:nth-child(14){ left: 45%; background: #ff9800; animation-delay: 0.75s; animation-duration: 3.1s; }
+.confetti:nth-child(15){ left: 75%; background: #ff4081; animation-delay: 0.3s;  animation-duration: 2.7s; }
+.confetti:nth-child(16){ left: 25%; background: #7c4dff; animation-delay: 0.5s;  animation-duration: 3s; }
+.confetti:nth-child(17){ left: 55%; background: #536dfe; animation-delay: 0.65s; animation-duration: 2.8s; }
+.confetti:nth-child(18){ left: 82%; background: #18ffff; animation-delay: 0.15s; animation-duration: 3.3s; }
+.confetti:nth-child(19){ left: 38%; background: #69f0ae; animation-delay: 0.8s;  animation-duration: 2.7s; }
+.confetti:nth-child(20){ left: 92%; background: #ffd740; animation-delay: 0.4s;  animation-duration: 3.1s; }
+
+@keyframes confettiFall {
+  0% {
+    top: -20px;
+    opacity: 1;
+    transform: translateX(0) rotateZ(0deg) rotateY(0deg);
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+    transform: translateX(60px) rotateZ(720deg) rotateY(360deg);
+  }
+}
+
+/* --- Pulsing border around card --- */
+.submit-success-card {
+  position: relative;
+  overflow: hidden;
+  animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+             glowPulse 2.5s ease-in-out infinite 1s;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(46, 125, 50, 0.15);
+  }
+  50% {
+    box-shadow: 0 4px 35px rgba(46, 125, 50, 0.35),
+                0 0 0 4px rgba(46, 125, 50, 0.08);
+  }
+}
+
+/* --- Sparkles around the heading --- */
+.sparkle {
+  position: absolute;
+  font-size: 24px;
+  animation: sparkleAnim 1.5s ease-in-out infinite;
+  opacity: 0;
+}
+
+.sparkle:nth-child(1) { top: 15%; left: 15%; animation-delay: 0.2s; }
+.sparkle:nth-child(2) { top: 20%; right: 15%; animation-delay: 0.5s; }
+.sparkle:nth-child(3) { bottom: 25%; left: 10%; animation-delay: 0.8s; }
+.sparkle:nth-child(4) { bottom: 20%; right: 10%; animation-delay: 1.1s; }
+
+@keyframes sparkleAnim {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+  }
+}
+
+/* --- Mobile responsive --- */
+@media (max-width: 768px) {
+  .success-heading { font-size: 28px; }
+  .success-checkmark { width: 90px; height: 90px; }
+  .celebration-emoji { font-size: 44px; }
+  .submit-actions button { width: 100%; }
+}
+/* ============================================================
+   SDLC WATERMARK — Global Background
+   ============================================================ */
+
+/* Watermark on every page */
+body::before {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  background-image: url('/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+  filter: grayscale(20%);
+  animation: watermarkFloat 20s ease-in-out infinite;
+}
+
+@keyframes watermarkFloat {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(3deg) scale(1.05);
+  }
+}
+
+/* Ensure content sits above watermark */
+.navbar,
+.container,
+.card,
+.modal-overlay {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   SDLC BRANDED LANDING PAGE (Login Page)
+   ============================================================ */
+
+/* Full-page background with subtle SDLC pattern */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a237e 0%, #283593 40%, #3949ab 100%);
+}
+
+/* Repeating watermark pattern */
+.auth-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/logo.png');
+  background-repeat: repeat;
+  background-size: 180px;
+  background-position: 0 0;
+  opacity: 0.06;
+  transform: rotate(-15deg) scale(1.4);
+  pointer-events: none;
+  animation: patternShift 60s linear infinite;
+}
+
+@keyframes patternShift {
+  0% { background-position: 0 0; }
+  100% { background-position: 360px 360px; }
+}
+
+/* Floating logo watermark top-left */
+.auth-page .watermark-logo {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 100px;
+  height: auto;
+  opacity: 0.4;
+  filter: brightness(0) invert(1);
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Floating logo watermark bottom-right */
+.auth-page .watermark-logo-2 {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 100px;
+  height: auto;
+  opacity: 0.4;
+  filter: brightness(0) invert(1);
+  animation: float 4s ease-in-out infinite 2s;
+}
+
+/* Glowing orbs */
+.auth-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.auth-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #64b5f6, transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation: float 8s ease-in-out infinite;
+}
+
+.auth-orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #7986cb, transparent 70%);
+  bottom: -150px;
+  right: -150px;
+  animation: float 10s ease-in-out infinite 2s;
+}
+
+.auth-orb-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #4fc3f7, transparent 70%);
+  top: 40%;
+  right: 10%;
+  animation: float 12s ease-in-out infinite 4s;
+}
+
+/* Card on auth pages */
+.auth-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35),
+              0 0 0 1px rgba(255, 255, 255, 0.15);
+  animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Big centered logo on auth card */
+.auth-logo-big {
+  width: 130px;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+  animation: bounceIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+             float 3s ease-in-out infinite 0.8s;
+  filter: drop-shadow(0 4px 14px rgba(26, 35, 126, 0.35));
+}
+
+/* SDLC heading */
+.auth-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #1a237e;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  animation: fadeInDown 0.6s ease-out 0.2s both;
+}
+
+/* Tagline under heading */
+.auth-subtitle {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 25px;
+  font-style: italic;
+  letter-spacing: 0.3px;
+  animation: fadeIn 0.6s ease-out 0.4s both;
+}
+
+/* Divider with SDLC colors */
+.auth-divider {
+  height: 3px;
+  width: 60px;
+  margin: 15px auto 25px;
+  background: linear-gradient(90deg, #2334ed, #2334ed, #2334ed);
+  border-radius: 2px;
+  animation: slideInRight 0.7s ease-out 0.5s both;
+}
+
+/* Footer brand under card */
+.auth-footer {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-align: center;
+  z-index: 2;
+  animation: fadeIn 1s ease-out 0.8s both;
+  white-space: nowrap;
+}
+
+.auth-footer strong {
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .auth-page .watermark-logo,
+  .auth-page .watermark-logo-2 {
+    width: 65px;
+    opacity: 0.25;
+  }
+
+  .auth-page::before {
+    background-size: 120px;
+  }
+
+  .auth-card {
+    padding: 28px 22px;
+    border-radius: 14px;
+  }
+
+  .auth-logo-big {
+    width: 100px;
+  }
+
+  .auth-title {
+    font-size: 22px;
+  }
+
+  .auth-orb-1,
+  .auth-orb-2,
+  .auth-orb-3 {
+    filter: blur(40px);
+    opacity: 0.25;
+  }
+
+  body::before {
+    width: 400px;
+    height: 400px;
+    opacity: 0.03;
+  }
+}
+
+/* ============================================================
+   NAVBAR BRAND ENHANCEMENT
+   ============================================================ */
+
+.navbar-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.navbar-brand-text .brand-main {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.navbar-brand-text .brand-sub {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 600px) {
+  .navbar-brand-text .brand-main {
+    font-size: 13px;
+  }
+  .navbar-brand-text .brand-sub {
+    font-size: 9px;
+  }
+}
+/* ============================================================
+   POSTER IMAGES — Left & Right of Login Card
+   ============================================================ */
+
+/* Wrap the auth card and posters together */
+.auth-layout {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Left poster */
+.poster-left,
+.poster-right {
+  flex-shrink: 0;
+  width: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35),
+              0 0 0 2px rgba(255, 255, 255, 0.15);
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+}
+
+.poster-left img,
+.poster-right img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* Left poster — slide in from left, tilt slightly */
+.poster-left {
+  animation: posterSlideLeft 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
+             posterFloatLeft 5s ease-in-out infinite 1s;
+  transform: rotate(-3deg);
+}
+
+/* Right poster — slide in from right, tilt slightly */
+.poster-right {
+  animation: posterSlideRight 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
+             posterFloatRight 5s ease-in-out infinite 1.4s;
+  transform: rotate(3deg);
+}
+
+/* Hover effect — poster comes forward */
+.poster-left:hover {
+  transform: rotate(0deg) scale(1.05) translateY(-8px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45),
+              0 0 0 3px rgba(255, 255, 255, 0.3);
+  z-index: 5;
+}
+
+.poster-right:hover {
+  transform: rotate(0deg) scale(1.05) translateY(-8px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45),
+              0 0 0 3px rgba(255, 255, 255, 0.3);
+  z-index: 5;
+}
+
+.poster-left:hover img,
+.poster-right:hover img {
+  transform: scale(1.08);
+}
+
+/* Entrance keyframes */
+@keyframes posterSlideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-200px) rotate(-15deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(15px) rotate(-5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(-3deg);
+  }
+}
+
+@keyframes posterSlideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(200px) rotate(15deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-15px) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(3deg);
+  }
+}
+
+/* Continuous gentle float */
+@keyframes posterFloatLeft {
+  0%, 100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(-3deg);
+  }
+}
+
+@keyframes posterFloatRight {
+  0%, 100% {
+    transform: translateY(0) rotate(3deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(3deg);
+  }
+}
+
+/* Shine/glow effect on posters */
+.poster-left::after,
+.poster-right::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: left 0.7s ease;
+  pointer-events: none;
+}
+
+.poster-left:hover::after,
+.poster-right:hover::after {
+  left: 100%;
+}
+
+/* Auth card inside layout — no side margins */
+.auth-layout .auth-card {
+  flex: 1;
+  min-width: 320px;
+  max-width: 480px;
+}
+
+/* ============================================================
+   RESPONSIVE — hide posters on smaller screens
+   ============================================================ */
+
+/* Tablet: shrink posters */
+@media (max-width: 1100px) {
+  .auth-layout {
+    gap: 20px;
+  }
+
+  .poster-left,
+  .poster-right {
+    width: 200px;
+  }
+}
+
+/* Small tablet / large phone: hide posters */
+@media (max-width: 900px) {
+  .poster-left,
+  .poster-right {
+    display: none;
+  }
+
+  .auth-layout {
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   OPTIONAL — Vertical posters (rotated text posters)
+   ============================================================ */
+
+/* Vertical variant — for tall poster images */
+.poster-vertical {
+  max-height: 600px;
+}
+
+.poster-vertical img {
+  height: 600px;
+  width: auto;
+  max-width: 320px;
+  object-fit: cover;
+}
+/* ============================================================
+   SITE FOOTER — SDLC Branded
+   ============================================================ */
+
+.site-footer {
+  margin-top: 60px;
+  background: linear-gradient(135deg, #0d1442 0%, #1a237e 60%, #283593 100%);
+  color: #cfd8dc;
+  padding: 0;
+  position: relative;
+  z-index: 5;
+  animation: fadeInUp 0.7s ease-out;
+}
+
+/* Top decorative gradient strip */
+.footer-strip {
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #ff6f00,
+    #ffc107,
+    #4caf50,
+    #2196f3,
+    #3f51b5,
+    #9c27b0,
+    #ff6f00
+  );
+  background-size: 400% 100%;
+  animation: footerStripShift 6s linear infinite;
+}
+
+@keyframes footerStripShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 400% 50%; }
+}
+
+/* Main footer body */
+.footer-main {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 40px;
+  padding: 50px 60px 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeInUp 0.6s ease-out 0.15s both;
+}
+
+/* ----- Left: brand + team ----- */
+.footer-brand {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.footer-brand:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.footer-logo {
+  width: 130px;
+  height: auto;
+  margin-bottom: 15px;
+  animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.4));
+}
+
+.footer-title {
+  font-size: 22px;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  background: linear-gradient(90deg, #fff, #bbdefb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footer-tagline {
+  font-size: 12px;
+  color: #ffc107;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.footer-desc {
+  font-size: 13px;
+  color: #b0bec5;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+/* ----- Right: branches ----- */
+.footer-heading {
+  font-size: 16px;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  display: inline-block;
+}
+
+.branches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.branch-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid #ffc107;
+  border-radius: 8px;
+  padding: 15px 18px;
+  transition: all 0.3s ease;
+  animation: fadeInLeft 0.5s ease-out both;
+}
+
+.branch-card:nth-child(1) { animation-delay: 0.1s; }
+.branch-card:nth-child(2) { animation-delay: 0.2s; }
+.branch-card:nth-child(3) { animation-delay: 0.3s; }
+.branch-card:nth-child(4) { animation-delay: 0.4s; }
+
+.branch-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(6px);
+  border-left-color: #ff9800;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.branch-card h5 {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+
+.branch-card p {
+  font-size: 12.5px;
+  color: #b0bec5;
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+
+.branch-phone {
+  color: #ffc107 !important;
+  font-size: 13px !important;
+  margin-top: 8px !important;
+}
+
+/* ----- Bottom bar ----- */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 25px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.7s ease-out 0.4s both;
+}
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.follow-label {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: bold;
+  font-size: 17px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.social-icon:hover {
+  transform: translateY(-4px) scale(1.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  filter: brightness(1.15);
+}
+
+.footer-copy {
+  color: #90a4ae;
+  font-size: 13px;
+  text-align: right;
+  line-height: 1.6;
+}
+
+.footer-copy strong {
+  color: #fff;
+}
+
+/* ----- Floating WhatsApp ----- */
+.whatsapp-float {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+  z-index: 999;
+  text-decoration: none;
+  animation: pulseGlow 2s infinite;
+  transition: transform 0.3s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.15) rotate(-8deg);
+  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.7);
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+  }
+  50% {
+    box-shadow: 0 6px 30px rgba(37, 211, 102, 0.9),
+                0 0 0 10px rgba(37, 211, 102, 0.15);
+  }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1000px) {
+  .footer-main {
+    grid-template-columns: 1fr;
+    padding: 40px 25px 25px;
+    gap: 30px;
+  }
+
+  .footer-brand {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .footer-bottom {
+    padding: 20px 25px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-copy {
+    text-align: center;
+  }
+
+  .footer-socials {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .branches-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-logo {
+    width: 100px;
+  }
+
+  .footer-title {
+    font-size: 18px;
+  }
+
+  .follow-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8px;
+    margin-right: 0;
+  }
+
+  .social-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
+
+  .whatsapp-float {
+    width: 48px;
+    height: 48px;
+    bottom: 20px;
+    left: 20px;
+  }
+}
